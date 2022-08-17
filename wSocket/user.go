@@ -11,10 +11,11 @@ import (
 type User struct {
 	// UserId
 	UserId string
+	
 	// room in which user reside
 	Room *Room
 
-	// websocket connection fot the user
+	// websocket connection for the user
 	Conn *websocket.Conn
 
 	// send channel for the user to recieve messages from the websocket
@@ -44,7 +45,7 @@ func (u *User) readPump() {
 	}
 }
 
-// writePump : pumps message from the hub to the websocket connetion
+// writePump : pumps message from the room to the websocket connection
 func (u *User) writePump() {
 
 	for {
@@ -55,6 +56,7 @@ func (u *User) writePump() {
 			u.Room.unregister <- u
 			break
 		}
+		
 		// write message to websocket connection
 		err := u.Conn.WriteJSON(msg)
 
@@ -73,6 +75,7 @@ func unsafeError(err error) bool {
 
 // serveWS handles websocket request from the peer
 func ServeWS(room *Room, userId string, w http.ResponseWriter, r *http.Request) {
+	// upgrade the simple HTTP request into websocket connection
 	conn, err := upgrader.Upgrade(w, r, nil)
 
 	if err != nil {
