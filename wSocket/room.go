@@ -3,16 +3,17 @@ package wSocket
 type Room struct {
 	// chatId
 	ChatId string
+	
 	// collection of users(websocket connections) in this room
 	Users map[*User]bool
 
 	// broadcast channel to send message to all of the users in this room
 	broadcast chan Message
 
-	// channel to register a new client
+	// channel to add/register a new user
 	register chan *User
 
-	// channel to register a new client
+	// channel to remove/unregister a user
 	unregister chan *User
 
 	// reason for defining register and unregister channel to avoid race condition
