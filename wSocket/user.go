@@ -8,8 +8,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/dragno99/VartalapApi/database"
-	"github.com/dragno99/VartalapApi/model"
 	"github.com/gorilla/websocket"
 )
 
